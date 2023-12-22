@@ -5,6 +5,7 @@ const cors=require("cors");
 const authRouter=require("./routes/authRoutes");
 const userRouter=require("./routes/userRoutes");
 const { authenticateToken } = require("./middlewares/authMiddleware");
+const corsOptions=require("./config/corsOptions");
 const app=express();
 
 
@@ -22,9 +23,9 @@ mongoose.connect(process.env.MONGO_URI,{
 });
 
 //Middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
 //Routes
 app.get('/',(req,res)=>
