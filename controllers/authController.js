@@ -16,7 +16,7 @@ const register=async (req,res)=>
         const foundUser=await User.findOne({email});
         if(foundUser)
         {
-            res.status(409).json({ msg: "User already exists"});
+            return res.status(409).json({ msg: "User already exists"});
         }
 
         const salt=await bcrypt.genSalt(10);
@@ -31,12 +31,11 @@ const register=async (req,res)=>
 
         await user.save();
 
-        res.status(201).json({msg: "User registered seccessfully!"});
+        return res.status(201).json({msg: "User registered seccessfully!"});
     }
     catch(error)
     {
-        // console.error("Error creating user:",error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
