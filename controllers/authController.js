@@ -70,7 +70,13 @@ const login=async (req,res)=>
         user.refreshToken=refreshToken;
         await user.save();
 
-        return res.status(200).json({ data: { accessToken: token, refreshToken }});
+        // return res.status(200).json({ data: { accessToken: token, refreshToken }});
+
+        //Send tokens as HTTP-only cookies in response
+        res.cookie("accessToken",token,{ httpOnly: true });
+        res.cookie("refreshToken",refreshToken,{ httpOnly: true });
+
+        return res.status(200).json({ msg: "Login Successful!" });
     }
     catch(error)
     {

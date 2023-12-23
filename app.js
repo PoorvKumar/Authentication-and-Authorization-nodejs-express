@@ -2,6 +2,7 @@ require("dotenv").config();
 const express=require("express");
 const mongoose=require("mongoose");
 const cors=require("cors");
+const cookieParser=require("cookie-parser");
 const authRouter=require("./routes/authRoutes");
 const userRouter=require("./routes/userRoutes");
 const { authenticateToken } = require("./middlewares/authMiddleware");
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGO_URI,{
 
 //Middleware
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

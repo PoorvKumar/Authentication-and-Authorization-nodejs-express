@@ -3,14 +3,21 @@ const User=require("../models/User");
 
 function authenticateToken(req,res,next)
 {
-    const authHeader=req.headers.Authorization || req.headers.authorization;
+    // const authHeader=req.headers.Authorization || req.headers.authorization;
 
-    if(!authHeader || !authHeader.startsWith("Bearer "))
+    // if(!authHeader || !authHeader.startsWith("Bearer "))
+    // {
+    //     return res.sendStatus(401);
+    // }
+
+    // const token=authHeader.split(" ")[1];
+
+    const token=req.cookies?.accessToken; //cookie-parser middleware function required to add the cookies from header to object req of type class Request
+
+    if(!token)
     {
-        return res.sendStatus(401);
+        return res.status(404).json({ error: "Token not found" });
     }
-
-    const token=authHeader.split(" ")[1];
 
     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,async (err,decoded)=>
     {
