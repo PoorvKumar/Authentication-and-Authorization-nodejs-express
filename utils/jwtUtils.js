@@ -2,7 +2,7 @@ const jwt=require("jsonwebtoken");
 
 function generateToken(user)
 {
-    return jwt.sign({ userId: user._id, roles: user.roles },process.env.ACCESS_TOKEN_SECRET,{ expiresIn: "3d"});
+    return jwt.sign({ userId: user._id, roles: user.roles, refreshToken: user.refreshToken },process.env.ACCESS_TOKEN_SECRET,{ expiresIn: "3d"});
 }
 
 const generateRefreshToken=(user)=>
