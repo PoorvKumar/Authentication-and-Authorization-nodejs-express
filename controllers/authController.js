@@ -45,7 +45,7 @@ const login=async (req,res)=>
     {
         const { email, password }=req.body;
 
-        if(!email && !password)
+        if(!email || !password)
         {
             return res.status(400).json({ msg: "Email or Password missing"});
         }
